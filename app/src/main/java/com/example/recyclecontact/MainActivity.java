@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                             adapter.notifyItemInserted(arrayList.size()-1);
                         }
                         recyclerView.scrollToPosition(arrayList.size()-1);
+                        dialog.dismiss();
                     }
                 });
                 dialog.show();
