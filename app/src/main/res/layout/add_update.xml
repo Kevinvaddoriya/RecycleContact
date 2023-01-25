@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/purple_200"
+    android:paddingLeft="21dp"
+    android:paddingRight="21dp"
+    android:paddingBottom="11dp"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Contact"
+        android:textColor="#FFF"
+        android:gravity="center"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:layout_margin="21dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:padding="11dp"
+        android:hint="Enter Number"
+        android:inputType="number"
+        android:id="@+id/editNumber"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:padding="11dp"
+        android:layout_marginTop="10dp"
+        android:hint="Enter Name"
+        android:id="@+id/editName"/>
+
+    <Button
+        android:id="@+id/adup"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:backgroundTint="@color/white"
+        android:text="Add"
+        android:textColor="@color/purple_200"
+        android:layout_marginTop="11dp"
+        android:layout_gravity="end"
+        android:textSize="15sp"/>
+
+
+
+</LinearLayout>
