@@ -18,10 +18,10 @@
         android:textStyle="bold"
         android:layout_margin="21dp"/>
     <EditText
-
+        android:drawableLeft="@drawable/baseline_call_24"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
+        android:background="@drawable/bc_of_edittext"
         android:padding="11dp"
         android:textColor="@color/black"
         android:hint="Enter Number"
@@ -29,9 +29,10 @@
         android:inputType="number"
         android:id="@+id/editNumber"/>
     <EditText
+        android:drawableLeft="@drawable/baseline_person_24"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
+        android:background="@drawable/bc_of_edittext"
         android:padding="11dp"
         android:layout_marginTop="10dp"
         android:hint="Enter Name"
