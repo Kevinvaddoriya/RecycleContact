@@ -17,11 +17,13 @@ import java.util.ArrayList;
 
 public class RecycleContactAdapter extends RecyclerView.Adapter<RecycleContactAdapter.ViewHolder> {
    Context context;
-   ArrayList<ContactModel> arrayList;
+   ArrayList<String> name;
+   ArrayList<String> number;
 
-    RecycleContactAdapter(Context context, ArrayList<ContactModel> arrayList){
+    RecycleContactAdapter(Context context, ArrayList<String> number,ArrayList<String> name ){
        this.context = context;
-       this.arrayList = arrayList;
+       this.number = number;
+       this.name = name;
    }
     @NonNull
     @Override
@@ -33,15 +35,15 @@ public class RecycleContactAdapter extends RecyclerView.Adapter<RecycleContactAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.img.setImageResource(arrayList.get(position).img);
-        holder.name.setText(arrayList.get(position).name);
-        holder.number.setText(arrayList.get(position).number);
+//        holder.img.setImageResource(arrayList.get(position).img);
+        holder.name.setText(name.get(position));
+        holder.number.setText(number.get(position));
         setAnimation(holder.itemView);
     }
 
     @Override
     public int getItemCount() {
-        return arrayList.size();
+        return name.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -51,7 +53,7 @@ public class RecycleContactAdapter extends RecyclerView.Adapter<RecycleContactAd
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            img = itemView.findViewById(R.id.img);
+//            img = itemView.findViewById(R.id.img);
             name = itemView.findViewById(R.id.name);
             number = itemView.findViewById(R.id.number);
         }

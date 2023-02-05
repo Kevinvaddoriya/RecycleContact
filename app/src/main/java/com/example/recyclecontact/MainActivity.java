@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +19,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    MyDateHelper mydb;
+    ArrayList<String> cnumber,cname;
     FloatingActionButton btnOpenDialog;
     RecycleContactAdapter adapter;
     RecyclerView recyclerView;
@@ -28,7 +32,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recycle);
         btnOpenDialog = findViewById(R.id.add);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mydb = new MyDateHelper(MainActivity.this);
+        cnumber = new ArrayList<>();
+        cname = new ArrayList<>();
+
+
+        displayData();
 
         btnOpenDialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 EditText editName = dialog.findViewById(R.id.editName);
                 EditText editNumber = dialog.findViewById(R.id.editNumber);
                 Button btnAction = dialog.findViewById(R.id.adup);
+
 
                 btnAction.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -59,8 +70,13 @@ public class MainActivity extends AppCompatActivity {
                             arrayList.add(new ContactModel(img,name,number));
                             adapter.notifyItemInserted(arrayList.size()-1);
                         }
+                        number = editNumber.getText().toString().trim();
+                        name = editName.getText().toString().trim();
+                        MyDateHelper md = new MyDateHelper(MainActivity.this);
+                        md.addContact(number,name);
                         recyclerView.scrollToPosition(arrayList.size()-1);
                         dialog.dismiss();
+
                     }
                 });
                 dialog.show();
@@ -68,44 +84,59 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        arrayList.add(new ContactModel(R.drawable.xavier,"Xavier the bos","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Utasv","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Divayesh","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Mohit","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Man","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Deep","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Vivek","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Amit","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Kevin","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Brijesh","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Brij","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Man","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Deep","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Vivek","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Amit","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Kevin","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Brijesh","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Brij","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Divayesh","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Mohit","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Man","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Deep","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Vivek","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Amit","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Kevin","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Brijesh","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Brij","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Man","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Deep","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Vivek","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Amit","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Kevin","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Brijesh","9685321470"));
-        arrayList.add(new ContactModel(R.drawable.xavier,"Brij","9685321470"));
+
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Xavier the bos","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Utasv","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Divayesh","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Mohit","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Man","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Deep","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Vivek","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Amit","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Kevin","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Brijesh","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Brij","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Man","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Deep","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Vivek","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Amit","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Kevin","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Brijesh","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Brij","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Divayesh","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Mohit","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Man","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Deep","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Vivek","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Amit","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Kevin","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Brijesh","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Brij","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Man","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Deep","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Vivek","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Amit","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Kevin","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Brijesh","9685321470"));
+//        arrayList.add(new ContactModel(R.drawable.xavier,"Brij","9685321470"));
 
 
-        adapter = new RecycleContactAdapter(this,arrayList);
+        adapter = new RecycleContactAdapter(this,cnumber,cname);
         recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
+
+
+    }
+    void displayData(){
+        Cursor cursor = mydb.readAllData();
+        if (cursor.getCount() == 0){
+            Toast.makeText(this,"No data.",Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()){
+                cnumber.add(cursor.getString(0));
+                cname.add(cursor.getString(1));
+            }
+        }
     }
 }
