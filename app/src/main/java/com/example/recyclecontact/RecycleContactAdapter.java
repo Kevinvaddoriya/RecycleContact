@@ -17,13 +17,11 @@ import java.util.ArrayList;
 
 public class RecycleContactAdapter extends RecyclerView.Adapter<RecycleContactAdapter.ViewHolder> {
    Context context;
-   ArrayList<String> name;
-   ArrayList<String> number;
+   ArrayList<ContactModel> arrayList;
 
-    RecycleContactAdapter(Context context, ArrayList<String> number,ArrayList<String> name ){
+    RecycleContactAdapter(Context context, ArrayList<ContactModel> arrayList){
        this.context = context;
-       this.number = number;
-       this.name = name;
+       this.arrayList = arrayList;
    }
     @NonNull
     @Override
@@ -36,14 +34,14 @@ public class RecycleContactAdapter extends RecyclerView.Adapter<RecycleContactAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 //        holder.img.setImageResource(arrayList.get(position).img);
-        holder.name.setText(name.get(position));
-        holder.number.setText(number.get(position));
+        holder.name.setText(arrayList.get(position).name);
+        holder.number.setText(arrayList.get(position).number);
         setAnimation(holder.itemView);
     }
 
     @Override
     public int getItemCount() {
-        return name.size();
+        return arrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

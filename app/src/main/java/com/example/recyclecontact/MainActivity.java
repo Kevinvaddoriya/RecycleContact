@@ -1,6 +1,8 @@
 package com.example.recyclecontact;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.collection.ArraySet;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     MyDateHelper mydb;
-    ArrayList<String> cnumber,cname;
+//    ArrayList<String> cnumber,cname;
     FloatingActionButton btnOpenDialog;
     RecycleContactAdapter adapter;
     RecyclerView recyclerView;
@@ -34,9 +36,6 @@ public class MainActivity extends AppCompatActivity {
         btnOpenDialog = findViewById(R.id.add);
 
         mydb = new MyDateHelper(MainActivity.this);
-        cnumber = new ArrayList<>();
-        cname = new ArrayList<>();
-
 
         displayData();
 
@@ -121,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 //        arrayList.add(new ContactModel(R.drawable.xavier,"Brij","9685321470"));
 
 
-        adapter = new RecycleContactAdapter(this,cnumber,cname);
+        adapter = new RecycleContactAdapter(this,arrayList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
@@ -134,8 +133,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this,"No data.",Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()){
-                cnumber.add(cursor.getString(0));
-                cname.add(cursor.getString(1));
+                arrayList.add(new ContactModel(cursor.getString(0),cursor.getString(1)));
             }
         }
     }
